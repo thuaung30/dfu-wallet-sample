@@ -1,6 +1,6 @@
 import { Select, Stack, useToast } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import AccountCard from "../components/AccountCard";
@@ -56,6 +56,7 @@ const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
+  const [action, setAction] = useState(false);
 
   __DEV__ && console.log(events);
 
@@ -73,8 +74,10 @@ const Dashboard: React.FC = () => {
           creditlineReceived
         );
         await confirmTrustlineTransaction(rawTx);
+        setAction(!action);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedNetworkAddress]
   );
 
@@ -94,7 +97,9 @@ const Dashboard: React.FC = () => {
   const onClickSend = useCallback(
     async (receiverAddress: string, sendValue: string) => {
       await sendPayment(selectedNetworkAddress, receiverAddress, sendValue);
+      setAction(!action);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedNetworkAddress]
   );
 
@@ -116,7 +121,7 @@ const Dashboard: React.FC = () => {
     dispatch(fetchAllNetworksRequest());
     dispatch(fetchEventsInAllNetworksRequest());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [action]);
 
   return (
     <Stack mb={2}>
