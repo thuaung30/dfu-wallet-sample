@@ -17,6 +17,7 @@ import { Network } from "../../state/networks/types";
 import Header from "../Header";
 import RoundButton from "../RoundButton";
 import * as client from "../../lib/client";
+import { useNavigate } from "react-router";
 
 interface TrustlineUpdateRequestCardProps {
   event: NormalizedTrustlineUpdateRequestEvent;
@@ -32,6 +33,7 @@ const TrustlineUpdateRequestCard: React.FC<TrustlineUpdateRequestCardProps> = ({
     getTrustlineUpdateOfCurrentRequest(event)
   );
   const accepted = !isEmpty(trustlineUpdate);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -45,12 +47,14 @@ const TrustlineUpdateRequestCard: React.FC<TrustlineUpdateRequestCardProps> = ({
         event.given
       );
       await client.confirmTrustlineTransaction(rawTx);
+      setLoading(false);
+      navigate("/");
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
