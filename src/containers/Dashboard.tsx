@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import AccountCard from "../components/AccountCard";
+import AlertCard from "../components/AlertCard";
 import EventsListCard from "../components/events/EventsListCard";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
@@ -149,21 +150,21 @@ const Dashboard: React.FC = () => {
       )}
       {networksUserDataLoading ? (
         <Loading />
-      ) : (
-        !isEmpty(account) &&
+      ) : !isEmpty(account) &&
         networksUserData !== undefined &&
-        !isEmpty(networksUserData) && (
-          <AccountCard
-            account={account as Account}
-            networkUserData={
-              (networksUserData as NetworksUserDataNormalized)[
-                selectedNetworkAddress!
-              ]
-            }
-            network={network as Network}
-            onClickExport={onClickExport}
-          />
-        )
+        !isEmpty(networksUserData) ? (
+        <AccountCard
+          account={account as Account}
+          networkUserData={
+            (networksUserData as NetworksUserDataNormalized)[
+              selectedNetworkAddress!
+            ]
+          }
+          network={network as Network}
+          onClickExport={onClickExport}
+        />
+      ) : (
+        <AlertCard message="Please select a currency network." />
       )}
       <SendModal send={onClickSend} />
       <TrustlineRequestModal trustlineRequest={trustlineRequest} />
