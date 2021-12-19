@@ -8,7 +8,8 @@ import AlertCard from "../components/AlertCard";
 import EventsListCard from "../components/events/EventsListCard";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
-import RoundButton from "../components/RoundButton";
+import LogoutDialog from "../components/LogoutDialog";
+// import RoundButton from "../components/RoundButton";
 import SendModal from "../components/SendModal";
 import TrustlineRequestModal from "../components/TrustlineRequestModal";
 import { __DEV__ } from "../config";
@@ -91,6 +92,7 @@ const Dashboard: React.FC = () => {
       status: "success",
       duration: 3000,
       isClosable: true,
+      position: "top",
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -168,9 +170,10 @@ const Dashboard: React.FC = () => {
       )}
       <SendModal send={onClickSend} />
       <TrustlineRequestModal trustlineRequest={trustlineRequest} />
-      <RoundButton onClick={onClickLogout} colorScheme="blue">
+      <LogoutDialog onClickLogout={onClickLogout} />
+      {/* <RoundButton onClick={onClickLogout} colorScheme="blue">
         Logout
-      </RoundButton>
+      </RoundButton> */}
       <EventsListCard events={events} dashboard={true} rightArrow={true} />
     </Stack>
   );
