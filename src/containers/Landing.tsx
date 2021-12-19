@@ -1,8 +1,9 @@
-import { Stack, Alert, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import AlertCard from "../components/AlertCard";
 import RoundButton from "../components/RoundButton";
 import { createAccountRequest } from "../state/account/actions";
 import {
@@ -41,9 +42,9 @@ const Landing: React.FC = () => {
       </Text>
       <Stack mb={2}>
         {!!error && !isEmpty(error) && error.message.length > 0 && (
-          <Alert status="error">
-            {`There was an error processing your request. ${error.message}`}
-          </Alert>
+          <AlertCard
+            message={`There was an error processing your request. ${error.message}`}
+          />
         )}
         <RoundButton isLoading={isLoading} onClick={onClickSignUp}>
           Sign up

@@ -1,8 +1,9 @@
-import { Stack, Alert, Input, Text } from "@chakra-ui/react";
+import { Stack, Input, Text } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import AlertCard from "../components/AlertCard";
 import RoundButton from "../components/RoundButton";
 import {
   recoverAccountFail,
@@ -38,9 +39,9 @@ const Login: React.FC = () => {
       <Stack mb={2}>
         <Text fontSize="xl">Enter your private key.</Text>
         {!!error && !isEmpty(error) && error.message.length > 0 && (
-          <Alert status="error">
-            {`There was an error processing your request. Error - ${error?.message}`}
-          </Alert>
+          <AlertCard
+            message={`There was an error processing your request. Error - ${error?.message}`}
+          />
         )}
         <Input ref={privateKeyRef} placeholder="0x..." />
         <RoundButton isLoading={isLoading} onClick={onClickLogin}>

@@ -9,9 +9,9 @@ import {
   Input,
   ModalFooter,
   useDisclosure,
-  Alert,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
+import AlertCard from "./AlertCard";
 import RoundButton from "./RoundButton";
 
 type InviteModalProps = {
@@ -60,17 +60,17 @@ const TrustlineRequestModal: React.FC<InviteModalProps> = ({
 
   return (
     <>
-      <RoundButton onClick={onOpen}>Invite</RoundButton>
+      <RoundButton onClick={onOpen}>New Trustline</RoundButton>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Send Invite</ModalHeader>
+          <ModalHeader>New Trustline</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {error.length > 0 && (
-              <Alert status="error">
-                {`There was an error processing your request. Error - ${error}`}
-              </Alert>
+              <AlertCard
+                message={`There was an error processing your request. Error - ${error}`}
+              />
             )}
             <Input mb={2} ref={counterPartyAddress} placeholder="0x..." />
             <Input mb={2} ref={creditlineGiven} placeholder="credit given" />
@@ -82,7 +82,7 @@ const TrustlineRequestModal: React.FC<InviteModalProps> = ({
               colorScheme="blue"
               onClick={onClickSend}
             >
-              Send
+              Request Trustline
             </RoundButton>
             <Box mr={4} height="20px">
               <Divider orientation="vertical" />
